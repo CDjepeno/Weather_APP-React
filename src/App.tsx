@@ -7,27 +7,35 @@ import WeatherService, { WeatherForecast, WeatherType } from './services/Weather
 const App: React.FC = () => {
 
   const [isLoading, setIsLoading] = useState<boolean>(false)
-  const [weather, setWeather] = useState<WeatherType>()
-  const [forecast, setForecast] = useState<WeatherForecast>()
-  const [location , setLocation] = useState("")
+  const [weather, setWeather]     = useState<WeatherType>()
+  const [forecast, setForecast]   = useState<WeatherForecast>()
+  const [location , setLocation]  = useState<string>("")
+  const [error, setError]         = useState<string>("")
 
   const handleSubmit = async (e: any) => {
     e.preventDefault()
+    setIsLoading(true)
+    const weather  = await WeatherService.getCurrentWeather(location);
+    const forecast2 = await WeatherService.getForecast(location);
+    if(weather && forecast2) {
+      setIsLoading(false)
+      setForecast(forecast2)
+      setWeather(weather)
 
-    const temp = await WeatherService.getCurrentWeather(location);
-    const forecast = await WeatherService.getForecast(location);
-
-    setWeather(temp)
-  }
-  console.log(weather);
+    } else {
+      setError('erreur est survenue');
+    }
+    
+  }  
 
   return (
     <div className="wrapper">
       <Form handleSubmit={handleSubmit} location={location} setLocation={setLocation} />
-
-      {weather &&
-        <Board weather={weather} />
+      {isLoading &&<p>Recherche...</p>}
+      {weather && forecast &&
+        <Board weather={weather} forecast={forecast} />
       }
+      {error && <p>{error}</p>}
     </div>
   );
 }

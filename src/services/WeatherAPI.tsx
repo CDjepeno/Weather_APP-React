@@ -14,6 +14,10 @@ export interface WeatherType {
         humidity: number;
         temp: number;
     }
+    name: string;
+    sys: {
+        country: string
+    }
 }
 
 export interface WeatherForecast {
@@ -24,6 +28,7 @@ export interface WeatherForecast {
             min: number;
         }
     }>
+    cod: string
 }
 
 export default class WeatherService {
