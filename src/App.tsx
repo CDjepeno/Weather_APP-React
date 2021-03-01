@@ -1,4 +1,4 @@
- import React, { useState } from 'react';
+ import React, { useEffect, useState } from 'react';
 import './App.css';
 import Board from './components/board/Board';
 import Form from './components/form/Form';
@@ -26,17 +26,20 @@ const App: React.FC = () => {
       setError('erreur est survenue');
     }
     
-  }  
+  } 
 
   return (
-    <div className="wrapper">
-      <Form handleSubmit={handleSubmit} location={location} setLocation={setLocation} />
-      {isLoading &&<p>Recherche...</p>}
-      {weather && forecast &&
-        <Board weather={weather} forecast={forecast} />
-      }
-      {error && <p>{error}</p>}
-    </div>
+      <div className="wrapper">
+        <Form handleSubmit={handleSubmit} location={location} setLocation={setLocation} />
+        {isLoading &&<p>Recherche...</p>}
+        {weather && forecast &&
+          <Board 
+            weather={weather} 
+            forecast={forecast} 
+          />
+        }
+        {error && <p>{error}</p>}
+      </div>
   );
 }
 
