@@ -4,3 +4,4 @@
 - Utilisation des hooks.
 - Météo sur les cinq prochains jours.
 - Météo en fonction de la ville ou du pays.
+- Système de changement de fond d'écran en fonction de la météo.
